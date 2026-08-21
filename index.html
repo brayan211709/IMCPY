@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de IMC</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #resultado {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Calculadora de IMC</h2> <label for="peso">Peso (kg):</label> <input type="number" id="peso" step="0.1"
+            placeholder="Ex: 75.5"> <label for="altura">Altura (metros):</label> <input type="number" id="altura"
+            step="0.01" placeholder="Ex: 1.75"> <button onclick="calcularIMC()">Calcular</button>
+        <div id="resultado"></div>
+    </div>
+    <script> function calcularIMC() { // Pega o valor digitado no input de ID 'peso' e o converte para número decimal (Float)
+            const peso = parseFloat(document.getElementById('peso').value);
+
+            // Pega o valor digitado no input de ID 'altura' e o converte para número decimal (Float)
+            const altura = parseFloat(document.getElementById('altura').value);
+
+            // Captura o elemento da tela onde o resultado deve ser impresso
+            const resultadoDiv = document.getElementById('resultado');
+
+            // Validação: Se peso ou altura não forem números (NaN) ou forem menores/iguais a zero
+            if (isNaN(peso) || isNaN(altura) || peso <= 0 || altura <= 0) {
+                resultadoDiv.innerHTML = "Por favor, insira valores válidos."; resultadoDiv.style.color = "red"; return;
+            }
+
+            // Executa o cálculo matemático: peso dividido por altura vezes altura
+            const imc = peso / (altura * altura);
+
+            // Cria uma variável de texto vazia para armazenar a frase da classificação
+            let classificacao = '';
+
+            // Estrutura condicional para definir a categoria do IMC com base no resultado obtido
+            if (imc < 18.5) {
+                classificacao = 'Abaixo do peso';
+            } else if (imc >= 18.5 && imc < 24.9) {
+                classificacao = 'Peso normal';
+            } else if (imc >= 25 && imc < 29.9) {
+                classificacao = 'Sobrepeso';
+            } else {
+                classificacao = 'Obesidade';
+            }
+
+            // Escreve o texto final dentro da Div de resultado, limitando o valor do IMC a 2 casas decimais (.toFixed(2))
+            resultadoDiv.innerHTML = `Seu IMC é ${imc.toFixed(2)} (${classificacao})`;
+
+            // Garante que a cor do texto do resultado seja uma cor escura padrão (caso tenha vindo de um erro vermelho)
+            resultadoDiv.style.color = "#333";
+        } </script>
+</body>
+
+</html>
